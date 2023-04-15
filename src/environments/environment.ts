@@ -4,6 +4,11 @@
 
 export const environment = {
   production: false,
+  swapi: {
+    apiUrl: 'https://swapi.dev/api/',
+    peopleEndpoint: 'people/',
+    planetsEndpoint: 'planets/',
+  },
 };
 
 /*
