@@ -8,6 +8,7 @@ import { ROUTES } from './routes';
 import { environment } from 'src/environments/environment';
 
 import { devTools } from '@ngneat/elf-devtools';
+import { SharedModule } from './shared/shared.module';
 
 // enable devtools for elf-store
 if (!environment.production) {
@@ -16,7 +17,12 @@ if (!environment.production) {
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, RouterModule.forRoot(ROUTES), CoreModule],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(ROUTES),
+    CoreModule,
+    SharedModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
