@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { PeopleState, PlanetsState } from '../state';
+import { FilmsState, PeopleState, PlanetsState } from '../state';
 import { updateRequestStatus } from '@ngneat/elf-requests';
 import { upsertEntities } from '@ngneat/elf-entities';
 import { setPage, updatePaginationData } from '@ngneat/elf-pagination';
-import { MODELS } from 'src/app/shared';
+import { MODELS, UTIL } from 'src/app/shared';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class SwapiService {
         next: (res: any) => {
           const planets: MODELS.Planet[] = res.results.map((person: any) => ({
             ...person,
-            id: person.url.match(/\d+/)[0],
+            id: UTIL.getIdFromUrl(person.url),
           }));
 
           PlanetsState.planetsStore.update(
@@ -69,7 +69,7 @@ export class SwapiService {
         next: (res: any) => {
           const person = {
             ...res,
-            id: res.url.match(/\d+/)[0],
+            id: UTIL.getIdFromUrl(res.url),
           };
 
           PlanetsState.planetsStore.update(
@@ -100,7 +100,7 @@ export class SwapiService {
         next: (res: any) => {
           const people: MODELS.Person[] = res.results.map((person: any) => ({
             ...person,
-            id: person.url.match(/\d+/)[0],
+            id: UTIL.getIdFromUrl(person.url),
           }));
 
           PeopleState.peopleStore.update(
@@ -141,7 +141,7 @@ export class SwapiService {
         next: (res: any) => {
           const person = {
             ...res,
-            id: res.url.match(/\d+/)[0],
+            id: UTIL.getIdFromUrl(res.url),
           };
 
           PeopleState.peopleStore.update(
@@ -158,6 +158,33 @@ export class SwapiService {
           PeopleState.peopleStore.update(
             updateRequestStatus('getPerson', 'idle')
           );
+        },
+      });
+  }
+
+  getFilm(id: string): void {
+    FilmsState.filmsStore.update(updateRequestStatus('getFilm', 'pending'));
+    this.httpClient
+      .get(`${environment.swapi.apiUrl}${environment.swapi.filmsEndpoint}${id}`)
+      .subscribe({
+        next: (res: any) => {
+          const person = {
+            ...res,
+            id: UTIL.getIdFromUrl(res.url),
+          };
+
+          FilmsState.filmsStore.update(
+            updateRequestStatus('getFilm', 'success'),
+            upsertEntities(person)
+          );
+        },
+        error: (err) => {
+          FilmsState.filmsStore.update(
+            updateRequestStatus('getFilm', 'error', err)
+          );
+        },
+        complete: () => {
+          FilmsState.filmsStore.update(updateRequestStatus('getFilm', 'idle'));
         },
       });
   }
