@@ -1,4 +1,40 @@
-<p>people-detail works!</p>
 <ng-container *ngIf="person$ | async as person">
-  {{ person | json }}
+  <table>
+    <tr>
+      <td>Name</td>
+      <td>{{ person["name"] }}</td>
+    </tr>
+    <tr>
+      <td>Height</td>
+      <td>{{ person["height"] }}</td>
+    </tr>
+    <tr>
+      <td>Mass</td>
+      <td>{{ person["mass"] }}</td>
+    </tr>
+    <tr>
+      <td>Hair color</td>
+      <td>{{ person["hair_color"] }}</td>
+    </tr>
+    <tr>
+      <td>Skin color</td>
+      <td>{{ person["skin_color"] }}</td>
+    </tr>
+    <tr>
+      <td>Eye color</td>
+      <td>{{ person["eye_color"] }}</td>
+    </tr>
+    <tr>
+      <td>Birth year</td>
+      <td>{{ person["birth_year"] }}</td>
+    </tr>
+    <tr>
+      <td>Gender</td>
+      <td>{{ person["gender"] }}</td>
+    </tr>
+    <tr>
+      <td>Home world</td>
+      <td>{{ person["homeworld"] }}</td>
+    </tr>
+  </table>
 </ng-container>

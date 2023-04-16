@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderByPipe } from './pipes/order-by.pipe';
 import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
-  declarations: [OrderByPipe, PaginationComponent],
+  declarations: [PaginationComponent],
   imports: [CommonModule],
-  exports: [OrderByPipe, PaginationComponent],
+  exports: [PaginationComponent],
 })
 export class SharedModule {}

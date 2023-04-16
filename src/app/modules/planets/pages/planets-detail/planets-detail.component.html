@@ -1,1 +1,4 @@
 <p>planets-detail works!</p>
+<ng-container *ngIf="planet$ | async as planet">
+  {{ planet | json }}
+</ng-container>

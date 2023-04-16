@@ -4,7 +4,7 @@ import { selectEntity } from '@ngneat/elf-entities';
 import { Observable, filter, map, switchMap, tap } from 'rxjs';
 import { SwapiService } from 'src/app/core/services/swapi.service';
 import { PeopleState } from 'src/app/core/state';
-import { isNotNullOrUndefined } from 'src/app/shared/util/filter-typeguard';
+import { UTIL } from 'src/app/shared';
 
 @Component({
   selector: 'app-people-detail',
@@ -22,13 +22,11 @@ export class PeopleDetailComponent implements OnInit {
   ngOnInit(): void {
     this.person$ = this.route.paramMap.pipe(
       map((params: ParamMap) => params.get('id')),
-      filter(isNotNullOrUndefined),
+      filter(UTIL.isNotNullOrUndefined),
       tap((id) => {
         this.swapiService.getPerson(id);
       }),
-      switchMap((id: string) => {
-        return PeopleState.peopleStore.pipe(selectEntity(id));
-      })
+      switchMap((id: string) => PeopleState.peopleStore.pipe(selectEntity(id)))
     );
   }
 }
