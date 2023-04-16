@@ -1,4 +1,43 @@
-<p>planets-detail works!</p>
-<ng-container *ngIf="planet$ | async as planet">
-  {{ planet | json }}
-</ng-container>
+<div class="container">
+  <ng-container *ngIf="planet$ | async as planet">
+    <h5 class="card-title">{{ planet["name"] }}</h5>
+    <table>
+      <tr>
+        <td>Rotation period:</td>
+        <td>{{ planet["rotation_period"] }}</td>
+      </tr>
+      <tr>
+        <td>Orbital period:</td>
+        <td>{{ planet["orbital_period"] }}</td>
+      </tr>
+      <tr>
+        <td>Diameter:</td>
+        <td>{{ planet["diameter"] }}</td>
+      </tr>
+      <tr>
+        <td>Climate:</td>
+        <td>{{ planet["climate"] }}</td>
+      </tr>
+      <tr>
+        <td>Gravity:</td>
+        <td>{{ planet["gravity"] }}</td>
+      </tr>
+      <tr>
+        <td>Terrain:</td>
+        <td>{{ planet["terrain"] }}</td>
+      </tr>
+      <tr>
+        <td>Surface water:</td>
+        <td>{{ planet["surface_water"] }}</td>
+      </tr>
+      <tr>
+        <td>Population:</td>
+        <td>{{ planet["population"] }}</td>
+      </tr>
+      <!-- <tr>
+        <td>Residents: </td>
+        <td>{{ planet["residents"] | json }}</td>
+      </tr> -->
+    </table>
+  </ng-container>
+</div>

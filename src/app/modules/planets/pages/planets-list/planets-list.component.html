@@ -1,16 +1,29 @@
-<ng-container *ngIf="planets$ | async as planets">
-  <div class="list-group list-group-flush">
-    <a
-      *ngFor="let planet of planets"
-      [routerLink]="[planet.id]"
-      class="list-group-item list-group-item-action"
-      >{{ planet["name"] }}</a
-    >
-  </div>
-</ng-container>
-<app-pagination
-  *ngIf="paginationData$ | async as paginationData"
-  [totalPages]="paginationData.totalPages"
-  [currentPage]="paginationData.currentPage"
-  (selectedPage)="page$.next($event)"
-></app-pagination>
+<div class="container">
+  <ng-container *ngIf="planets$ | async as planets">
+    <ng-container *ngIf="planets.length !== 0; else spinner">
+      <div class="list-group list-group-flush">
+        <a
+          *ngFor="let planet of planets"
+          [routerLink]="[planet.id]"
+          class="list-group-item list-group-item-action"
+          >{{ planet["name"] }}</a
+        >
+      </div>
+      <div class="pagination-container">
+        <app-pagination
+          *ngIf="paginationData$ | async as paginationData"
+          [totalPages]="paginationData.totalPages"
+          [currentPage]="paginationData.currentPage"
+          (selectedPage)="page$.next($event)"
+        ></app-pagination>
+      </div>
+    </ng-container>
+    <ng-template #spinner>
+      <div class="spinner-container">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { SwapiService } from 'src/app/core/services/swapi.service';
 import { PeopleState } from 'src/app/core/state';
 

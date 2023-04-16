@@ -1,2 +1,9 @@
-<p>thumbnail works!</p>
-{{ film$ | async | json }}
+<!-- <div
+  *ngIf="film$ | async as film"
+  class="bg-secondary-subtle p-2 film-thumbnail-container"
+>
+  <h6>{{ film["title"] }}({{ film["release_date"] }})</h6>
+</div> -->
+<li *ngIf="film$ | async as film">
+  {{ film["title"] }}({{ film["release_date"] }})
+</li>

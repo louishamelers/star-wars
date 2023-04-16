@@ -1,16 +1,29 @@
-<ng-container *ngIf="people$ | async as people">
-  <div class="list-group list-group-flush">
-    <a
-      *ngFor="let person of people"
-      [routerLink]="[person.id]"
-      class="list-group-item list-group-item-action"
-      >{{ person["name"] }}</a
-    >
-  </div>
-  <app-pagination
-    *ngIf="paginationData$ | async as paginationData"
-    [totalPages]="paginationData.totalPages"
-    [currentPage]="paginationData.currentPage"
-    (selectedPage)="page$.next($event)"
-  ></app-pagination>
-</ng-container>
+<div class="container">
+  <ng-container *ngIf="people$ | async as people">
+    <ng-container *ngIf="people.length !== 0; else spinner">
+      <div class="list-group list-group-flush">
+        <a
+          *ngFor="let person of people"
+          [routerLink]="[person.id]"
+          class="list-group-item list-group-item-action"
+          >{{ person["name"] }}</a
+        >
+      </div>
+      <div class="pagination-container">
+        <app-pagination
+          *ngIf="paginationData$ | async as paginationData"
+          [totalPages]="paginationData.totalPages"
+          [currentPage]="paginationData.currentPage"
+          (selectedPage)="page$.next($event)"
+        ></app-pagination>
+      </div>
+    </ng-container>
+    <ng-template #spinner>
+      <div class="spinner-container">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>

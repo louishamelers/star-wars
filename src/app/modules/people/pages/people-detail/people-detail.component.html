@@ -1,48 +1,46 @@
-<ng-container *ngIf="person$ | async as person">
-  <table>
-    <tr>
-      <td>Name</td>
-      <td>{{ person["name"] }}</td>
-    </tr>
-    <tr>
-      <td>Height</td>
-      <td>{{ person["height"] }}</td>
-    </tr>
-    <tr>
-      <td>Mass</td>
-      <td>{{ person["mass"] }}</td>
-    </tr>
-    <tr>
-      <td>Hair color</td>
-      <td>{{ person["hair_color"] }}</td>
-    </tr>
-    <tr>
-      <td>Skin color</td>
-      <td>{{ person["skin_color"] }}</td>
-    </tr>
-    <tr>
-      <td>Eye color</td>
-      <td>{{ person["eye_color"] }}</td>
-    </tr>
-    <tr>
-      <td>Birth year</td>
-      <td>{{ person["birth_year"] }}</td>
-    </tr>
-    <tr>
-      <td>Gender</td>
-      <td>{{ person["gender"] }}</td>
-    </tr>
-    <tr>
-      <td>Home world</td>
-      <td>{{ person["homeworld"] }}</td>
-    </tr>
-    <tr>
-      <td>Films</td>
-      <td>
-        <div *ngFor="let filmId of person.filmIds">
-          <app-thumbnail [filmId]="filmId"></app-thumbnail>
-        </div>
-      </td>
-    </tr>
-  </table>
-</ng-container>
+<div class="container">
+  <ng-container *ngIf="person$ | async as person">
+    <h5 class="card-title">{{ person["name"] }}</h5>
+    <table>
+      <tr>
+        <td>Height:</td>
+        <td>{{ person["height"] }} cm</td>
+      </tr>
+      <tr>
+        <td>Mass:</td>
+        <td>{{ person["mass"] }} kg</td>
+      </tr>
+      <tr>
+        <td>Hair color:</td>
+        <td>{{ person["hair_color"] }}</td>
+      </tr>
+      <tr>
+        <td>Skin color:</td>
+        <td>{{ person["skin_color"] }}</td>
+      </tr>
+      <tr>
+        <td>Eye color:</td>
+        <td>{{ person["eye_color"] }}</td>
+      </tr>
+      <tr>
+        <td>Birth year:</td>
+        <td>{{ person["birth_year"] }}</td>
+      </tr>
+      <tr>
+        <td>Gender:</td>
+        <td>{{ person["gender"] }}</td>
+      </tr>
+      <!-- <tr>
+        <td>Home world:</td>
+        <td>{{ person["homeworld"] }}</td>
+      </tr> -->
+    </table>
+
+    <h6 class="films-header">Films</h6>
+    <div class="grid gap-3">
+      <div *ngFor="let filmId of person.filmIds" class="g-col-6">
+        <app-thumbnail [filmId]="filmId"></app-thumbnail>
+      </div>
+    </div>
+  </ng-container>
+</div>

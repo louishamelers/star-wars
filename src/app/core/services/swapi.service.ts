@@ -104,6 +104,7 @@ export class SwapiService {
             filmIds: person.films.map((filmUrl: string) =>
               UTIL.getIdFromUrl(filmUrl)
             ),
+            homeWorldId: UTIL.getIdFromUrl(person.homeworld),
           }));
 
           PeopleState.peopleStore.update(
@@ -148,6 +149,7 @@ export class SwapiService {
             filmIds: res.films.map((filmUrl: string) =>
               UTIL.getIdFromUrl(filmUrl)
             ),
+            homeWorldId: UTIL.getIdFromUrl(res.homeworld),
           };
 
           PeopleState.peopleStore.update(
