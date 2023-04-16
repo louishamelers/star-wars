@@ -8,6 +8,7 @@ export const environment = {
     apiUrl: 'https://swapi.dev/api/',
     peopleEndpoint: 'people/',
     planetsEndpoint: 'planets/',
+    filmsEndpoint: 'films/',
   },
 };
 
