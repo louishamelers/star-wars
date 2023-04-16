@@ -36,5 +36,13 @@
       <td>Home world</td>
       <td>{{ person["homeworld"] }}</td>
     </tr>
+    <tr>
+      <td>Films</td>
+      <td>
+        <div *ngFor="let filmId of person.filmIds">
+          <app-thumbnail [filmId]="filmId"></app-thumbnail>
+        </div>
+      </td>
+    </tr>
   </table>
 </ng-container>

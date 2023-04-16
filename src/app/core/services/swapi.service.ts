@@ -101,6 +101,9 @@ export class SwapiService {
           const people: MODELS.Person[] = res.results.map((person: any) => ({
             ...person,
             id: UTIL.getIdFromUrl(person.url),
+            filmIds: person.films.map((filmUrl: string) =>
+              UTIL.getIdFromUrl(filmUrl)
+            ),
           }));
 
           PeopleState.peopleStore.update(
@@ -142,6 +145,9 @@ export class SwapiService {
           const person = {
             ...res,
             id: UTIL.getIdFromUrl(res.url),
+            filmIds: res.films.map((filmUrl: string) =>
+              UTIL.getIdFromUrl(filmUrl)
+            ),
           };
 
           PeopleState.peopleStore.update(
