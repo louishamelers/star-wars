@@ -1,1 +1,7 @@
 <p>people-list works!</p>
+<ng-container *ngIf="people$ | async as people">
+  <div *ngFor="let person of people">
+    <a [routerLink]="[person.id]">{{ person["name"] }}</a>
+    {{ person | json }}
+  </div>
+</ng-container>

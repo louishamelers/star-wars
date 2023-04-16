@@ -1,1 +1,4 @@
 <p>people-detail works!</p>
+<ng-container *ngIf="person$ | async as person">
+  {{ person | json }}
+</ng-container>
