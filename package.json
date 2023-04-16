@@ -21,7 +21,9 @@
     "@ngneat/elf": "^2.3.1",
     "@ngneat/elf-devtools": "^1.2.1",
     "@ngneat/elf-entities": "^4.4.4",
+    "@ngneat/elf-pagination": "^1.1.0",
     "@ngneat/elf-requests": "^1.7.0",
+    "bootstrap": "^5.3.0-alpha3",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
