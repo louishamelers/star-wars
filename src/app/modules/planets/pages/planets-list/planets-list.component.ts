@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { getPaginationData } from '@ngneat/elf-pagination';
+import { Subject, startWith, takeUntil } from 'rxjs';
 import { SwapiService } from 'src/app/core/services/swapi.service';
 import { PlanetsState } from 'src/app/core/state';
 
@@ -17,7 +18,10 @@ export class PlanetsListComponent implements OnInit {
   constructor(private swapiService: SwapiService) {}
 
   ngOnInit(): void {
-    this.swapiService.getPlanets();
+    const currentPage = PlanetsState.planetsStore.query(
+      getPaginationData()
+    ).currentPage;
+    this.swapiService.getPlanets(currentPage);
     this.handlePagination();
   }
 
@@ -28,6 +32,8 @@ export class PlanetsListComponent implements OnInit {
 
   private handlePagination(): void {
     this.page$.pipe(takeUntil(this.destroy$)).subscribe((pageNumber) => {
+      console.log(pageNumber);
+
       this.swapiService.getPlanets(pageNumber);
     });
   }

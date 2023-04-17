@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { getPaginationData } from '@ngneat/elf-pagination';
 import { Subject, takeUntil } from 'rxjs';
 import { SwapiService } from 'src/app/core/services/swapi.service';
 import { PeopleState } from 'src/app/core/state';
@@ -17,7 +18,10 @@ export class PeopleListComponent implements OnInit, OnDestroy {
   constructor(private swapiService: SwapiService) {}
 
   ngOnInit(): void {
-    this.swapiService.getPeople();
+    const currentPage = PeopleState.peopleStore.query(
+      getPaginationData()
+    ).currentPage;
+    this.swapiService.getPeople(currentPage);
     this.handlePagination();
   }
 
