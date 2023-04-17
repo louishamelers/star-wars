@@ -1,6 +1,22 @@
 <div class="container">
   <ng-container *ngIf="planets$ | async as planets">
     <ng-container *ngIf="planets.length !== 0; else spinner">
+      <div class="search-container my-3">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="inputSearch" class="col-form-label">Search</label>
+          </div>
+          <div class="col-auto">
+            <input
+              type="search"
+              id="inputSearch"
+              class="form-control"
+              aria-labelledby="searchHelpInline"
+              [formControl]="queryFormControl"
+            />
+          </div>
+        </div>
+      </div>
       <div class="list-group list-group-flush">
         <a
           *ngFor="let planet of planets"

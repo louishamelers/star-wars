@@ -14,13 +14,13 @@ import { MODELS, UTIL } from 'src/app/shared';
 export class SwapiService {
   constructor(private httpClient: HttpClient) {}
 
-  getPlanets(page: number = 1): void {
+  getPlanets(page: number = 1, query: string = ''): void {
     PlanetsState.planetsStore.update(
       updateRequestStatus('getPlanets', 'pending')
     );
     this.httpClient
       .get(
-        `${environment.swapi.apiUrl}${environment.swapi.planetsEndpoint}?page=${page}`
+        `${environment.swapi.apiUrl}${environment.swapi.planetsEndpoint}?search=${query}&page=${page}`
       )
       .subscribe({
         next: (res: any) => {

@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { getPaginationData } from '@ngneat/elf-pagination';
-import { Subject, startWith, takeUntil } from 'rxjs';
+import {
+  Subject,
+  combineLatest,
+  debounceTime,
+  map,
+  pairwise,
+  startWith,
+  takeUntil,
+} from 'rxjs';
 import { SwapiService } from 'src/app/core/services/swapi.service';
 import { PlanetsState } from 'src/app/core/state';
 
@@ -14,6 +23,8 @@ export class PlanetsListComponent implements OnInit {
   planets$ = PlanetsState.currentPage$;
   paginationData$ = PlanetsState.paginationData$;
   page$ = new Subject<number>();
+
+  queryFormControl = new FormControl();
 
   constructor(private swapiService: SwapiService) {}
 
@@ -31,10 +42,22 @@ export class PlanetsListComponent implements OnInit {
   }
 
   private handlePagination(): void {
-    this.page$.pipe(takeUntil(this.destroy$)).subscribe((pageNumber) => {
-      console.log(pageNumber);
-
-      this.swapiService.getPlanets(pageNumber);
-    });
+    combineLatest([
+      this.queryFormControl.valueChanges.pipe(
+        debounceTime(200),
+        startWith(this.queryFormControl.value)
+      ),
+      this.page$.pipe(startWith(1)),
+    ])
+      .pipe(
+        pairwise(),
+        map(([[oldQuery, _], [query, page]]) =>
+          query !== oldQuery ? { query, page: 1 } : { query, page }
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(({ query, page }) =>
+        this.swapiService.getPlanets(page, query)
+      );
   }
 }
