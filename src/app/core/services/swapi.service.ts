@@ -19,9 +19,7 @@ export class SwapiService {
   ) {}
 
   getPlanets(page: number = 1, query: string = ''): void {
-    PlanetsState.planetsStore.update(
-      updateRequestStatus('getPlanets', 'pending')
-    );
+    PlanetsState.store.update(updateRequestStatus('getPlanets', 'pending'));
     this.httpClient
       .get(
         `${environment.swapi.apiUrl}${environment.swapi.planetsEndpoint}?search=${query}&page=${page}`
@@ -33,7 +31,7 @@ export class SwapiService {
             id: UTIL.getIdFromUrl(person.url),
           }));
 
-          PlanetsState.planetsStore.update(
+          PlanetsState.store.update(
             updateRequestStatus('getPlanets', 'success'),
             upsertEntities(planets),
             updatePaginationData({
@@ -49,7 +47,7 @@ export class SwapiService {
           );
         },
         error: (err) => {
-          PlanetsState.planetsStore.update(
+          PlanetsState.store.update(
             updateRequestStatus('getPlanets', 'error', err)
           );
           this.toastsService.addToast(
@@ -58,17 +56,13 @@ export class SwapiService {
           );
         },
         complete: () => {
-          PlanetsState.planetsStore.update(
-            updateRequestStatus('getPlanets', 'idle')
-          );
+          PlanetsState.store.update(updateRequestStatus('getPlanets', 'idle'));
         },
       });
   }
 
   getPlanet(id: string): void {
-    PlanetsState.planetsStore.update(
-      updateRequestStatus('getPerson', 'pending')
-    );
+    PlanetsState.store.update(updateRequestStatus('getPerson', 'pending'));
     this.httpClient
       .get(
         `${environment.swapi.apiUrl}${environment.swapi.planetsEndpoint}${id}`
@@ -80,13 +74,13 @@ export class SwapiService {
             id: UTIL.getIdFromUrl(res.url),
           };
 
-          PlanetsState.planetsStore.update(
+          PlanetsState.store.update(
             updateRequestStatus('getPerson', 'success'),
             upsertEntities(person)
           );
         },
         error: (err) => {
-          PlanetsState.planetsStore.update(
+          PlanetsState.store.update(
             updateRequestStatus('getPerson', 'error', err)
           );
           this.toastsService.addToast(
@@ -95,15 +89,13 @@ export class SwapiService {
           );
         },
         complete: () => {
-          PlanetsState.planetsStore.update(
-            updateRequestStatus('getPerson', 'idle')
-          );
+          PlanetsState.store.update(updateRequestStatus('getPerson', 'idle'));
         },
       });
   }
 
   getPeople(page: number = 1, query: string = ''): void {
-    PeopleState.peopleStore.update(updateRequestStatus('getPeople', 'pending'));
+    PeopleState.store.update(updateRequestStatus('getPeople', 'pending'));
     this.httpClient
       .get(
         `${environment.swapi.apiUrl}${environment.swapi.peopleEndpoint}?search=${query}&page=${page}`
@@ -119,7 +111,7 @@ export class SwapiService {
             homeWorldId: UTIL.getIdFromUrl(person.homeworld),
           }));
 
-          PeopleState.peopleStore.update(
+          PeopleState.store.update(
             updateRequestStatus('getPeople', 'success'),
             upsertEntities(people),
             updatePaginationData({
@@ -135,7 +127,7 @@ export class SwapiService {
           );
         },
         error: (err) => {
-          PeopleState.peopleStore.update(
+          PeopleState.store.update(
             updateRequestStatus('getPeople', 'error', err)
           );
           this.toastsService.addToast(
@@ -144,15 +136,13 @@ export class SwapiService {
           );
         },
         complete: () => {
-          PeopleState.peopleStore.update(
-            updateRequestStatus('getPeople', 'idle')
-          );
+          PeopleState.store.update(updateRequestStatus('getPeople', 'idle'));
         },
       });
   }
 
   getPerson(id: string): void {
-    PeopleState.peopleStore.update(updateRequestStatus('getPerson', 'pending'));
+    PeopleState.store.update(updateRequestStatus('getPerson', 'pending'));
     this.httpClient
       .get(
         `${environment.swapi.apiUrl}${environment.swapi.peopleEndpoint}${id}`
@@ -168,13 +158,13 @@ export class SwapiService {
             homeWorldId: UTIL.getIdFromUrl(res.homeworld),
           };
 
-          PeopleState.peopleStore.update(
+          PeopleState.store.update(
             updateRequestStatus('getPerson', 'success'),
             upsertEntities(person)
           );
         },
         error: (err) => {
-          PeopleState.peopleStore.update(
+          PeopleState.store.update(
             updateRequestStatus('getPerson', 'error', err)
           );
           this.toastsService.addToast(
@@ -183,15 +173,13 @@ export class SwapiService {
           );
         },
         complete: () => {
-          PeopleState.peopleStore.update(
-            updateRequestStatus('getPerson', 'idle')
-          );
+          PeopleState.store.update(updateRequestStatus('getPerson', 'idle'));
         },
       });
   }
 
   getFilm(id: string): void {
-    FilmsState.filmsStore.update(updateRequestStatus('getFilm', 'pending'));
+    FilmsState.store.update(updateRequestStatus('getFilm', 'pending'));
     this.httpClient
       .get(`${environment.swapi.apiUrl}${environment.swapi.filmsEndpoint}${id}`)
       .subscribe({
@@ -201,22 +189,20 @@ export class SwapiService {
             id: UTIL.getIdFromUrl(res.url),
           };
 
-          FilmsState.filmsStore.update(
+          FilmsState.store.update(
             updateRequestStatus('getFilm', 'success'),
             upsertEntities(person)
           );
         },
         error: (err) => {
-          FilmsState.filmsStore.update(
-            updateRequestStatus('getFilm', 'error', err)
-          );
+          FilmsState.store.update(updateRequestStatus('getFilm', 'error', err));
           this.toastsService.addToast(
             'Could not fetch data, try again.',
             'error'
           );
         },
         complete: () => {
-          FilmsState.filmsStore.update(updateRequestStatus('getFilm', 'idle'));
+          FilmsState.store.update(updateRequestStatus('getFilm', 'idle'));
         },
       });
   }

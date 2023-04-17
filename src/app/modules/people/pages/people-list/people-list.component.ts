@@ -27,7 +27,7 @@ export class PeopleListComponent implements OnInit {
   page$ = new Subject<number>();
 
   showNoResults$?: Observable<boolean>;
-  pending$ = PeopleState.peopleStore.pipe(
+  pending$ = PeopleState.store.pipe(
     selectRequestStatus('getPeople'),
     map((state) => state.value === 'pending')
   );
@@ -37,7 +37,7 @@ export class PeopleListComponent implements OnInit {
   constructor(private swapiService: SwapiService) {}
 
   ngOnInit(): void {
-    const currentPage = PeopleState.peopleStore.query(
+    const currentPage = PeopleState.store.query(
       getPaginationData()
     ).currentPage;
     this.swapiService.getPeople(currentPage);
@@ -52,7 +52,7 @@ export class PeopleListComponent implements OnInit {
 
   private initShowNoResults(): void {
     this.showNoResults$ = combineLatest([
-      PeopleState.peopleStore.pipe(selectRequestStatus('getPeople')),
+      PeopleState.store.pipe(selectRequestStatus('getPeople')),
       PeopleState.currentPage$,
     ]).pipe(
       map(([state, results]) => {

@@ -27,7 +27,7 @@ export class PlanetsListComponent implements OnInit {
   page$ = new Subject<number>();
 
   showNoResults$?: Observable<boolean>;
-  pending$ = PlanetsState.planetsStore.pipe(
+  pending$ = PlanetsState.store.pipe(
     selectRequestStatus('getPlanets'),
     map((state) => state.value === 'pending')
   );
@@ -37,7 +37,7 @@ export class PlanetsListComponent implements OnInit {
   constructor(private swapiService: SwapiService) {}
 
   ngOnInit(): void {
-    const currentPage = PlanetsState.planetsStore.query(
+    const currentPage = PlanetsState.store.query(
       getPaginationData()
     ).currentPage;
     this.swapiService.getPlanets(currentPage);
@@ -52,7 +52,7 @@ export class PlanetsListComponent implements OnInit {
 
   private initShowNoResults(): void {
     this.showNoResults$ = combineLatest([
-      PlanetsState.planetsStore.pipe(selectRequestStatus('getPlanets')),
+      PlanetsState.store.pipe(selectRequestStatus('getPlanets')),
       PlanetsState.currentPage$,
     ]).pipe(
       map(([state, results]) => {

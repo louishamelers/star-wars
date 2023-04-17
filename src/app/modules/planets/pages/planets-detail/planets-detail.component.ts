@@ -26,9 +26,7 @@ export class PlanetsDetailComponent implements OnInit {
       tap((id) => {
         this.swapiService.getPlanet(id);
       }),
-      switchMap((id: string) =>
-        PlanetsState.planetsStore.pipe(selectEntity(id))
-      )
+      switchMap((id: string) => PlanetsState.store.pipe(selectEntity(id)))
     );
   }
 }

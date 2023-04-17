@@ -19,7 +19,7 @@ export class ThumbnailComponent implements OnInit {
   ngOnInit(): void {
     if (UTIL.isNotNullOrUndefined(this.filmId)) {
       this.swapiService.getFilm(this.filmId);
-      this.film$ = FilmsState.filmsStore.pipe(selectEntity(this.filmId));
+      this.film$ = FilmsState.store.pipe(selectEntity(this.filmId));
     }
   }
 }

@@ -1,8 +1,8 @@
 import { selectAllEntities } from '@ngneat/elf-entities';
 import { shareReplay } from 'rxjs';
-import { filmsStore } from './films.store';
+import { store } from './films.store';
 
-export const people$ = filmsStore.pipe(
+export const people$ = store.pipe(
   selectAllEntities(),
   shareReplay({ refCount: true })
 );

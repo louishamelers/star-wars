@@ -26,7 +26,7 @@ export class PeopleDetailComponent implements OnInit {
       tap((id) => {
         this.swapiService.getPerson(id);
       }),
-      switchMap((id: string) => PeopleState.peopleStore.pipe(selectEntity(id)))
+      switchMap((id: string) => PeopleState.store.pipe(selectEntity(id)))
     );
   }
 }

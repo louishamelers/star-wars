@@ -9,10 +9,10 @@ import { MODELS } from 'src/app/shared';
 export class ToastsService {
   addToast(message: string, type: MODELS.ToastType = 'info'): void {
     const id = crypto.randomUUID();
-    ToastsState.toastsStore.update(upsertEntities({ id, message, type }));
+    ToastsState.store.update(upsertEntities({ id, message, type }));
   }
 
   removeToast(id: string): void {
-    ToastsState.toastsStore.update(deleteEntities(id));
+    ToastsState.store.update(deleteEntities(id));
   }
 }
