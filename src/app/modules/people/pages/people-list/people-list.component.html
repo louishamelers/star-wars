@@ -1,6 +1,34 @@
 <div class="container">
+  <div class="search-container my-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="inputSearch" class="col-form-label">Search</label>
+      </div>
+      <div class="col-auto">
+        <input
+          type="search"
+          placeholder="Search for characters..."
+          id="inputSearch"
+          class="form-control"
+          aria-labelledby="searchHelpInline"
+          [formControl]="queryFormControl"
+        />
+      </div>
+      <div class="col-auto spinner-container">
+        <div
+          class="spinner-border spinner-border-sm"
+          role="status"
+          *ngIf="pending$ | async"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
   <ng-container *ngIf="people$ | async as people">
-    <ng-container *ngIf="people.length !== 0; else spinner">
+    <ng-container
+      *ngIf="people.length !== 0 || (pending$ | async); else noResults"
+    >
       <div class="list-group list-group-flush">
         <a
           *ngFor="let person of people"
@@ -9,20 +37,21 @@
           >{{ person["name"] }}</a
         >
       </div>
-      <div class="pagination-container">
+      <div
+        class="pagination-container"
+        *ngIf="paginationData$ | async as paginationData"
+      >
         <app-pagination
-          *ngIf="paginationData$ | async as paginationData"
+          *ngIf="paginationData.totalPages !== 0"
           [totalPages]="paginationData.totalPages"
           [currentPage]="paginationData.currentPage"
           (selectedPage)="page$.next($event)"
         ></app-pagination>
       </div>
     </ng-container>
-    <ng-template #spinner>
-      <div class="spinner-container">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+    <ng-template #noResults>
+      <div class="no-results-container">
+        <span>No results...</span>
       </div>
     </ng-template>
   </ng-container>

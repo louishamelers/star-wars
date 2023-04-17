@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ROUTES } from './routes';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FilmsModule } from '../films/films.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [PeopleListComponent, PeopleDetailComponent],
@@ -14,6 +15,7 @@ import { FilmsModule } from '../films/films.module';
     SharedModule,
     RouterModule.forChild(ROUTES),
     FilmsModule,
+    ReactiveFormsModule,
   ],
 })
 export class PeopleModule {}

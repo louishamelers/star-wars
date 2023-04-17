@@ -102,11 +102,11 @@ export class SwapiService {
       });
   }
 
-  getPeople(page: number = 1): void {
+  getPeople(page: number = 1, query: string = ''): void {
     PeopleState.peopleStore.update(updateRequestStatus('getPeople', 'pending'));
     this.httpClient
       .get(
-        `${environment.swapi.apiUrl}${environment.swapi.peopleEndpoint}?page=${page}`
+        `${environment.swapi.apiUrl}${environment.swapi.peopleEndpoint}?search=${query}&page=${page}`
       )
       .subscribe({
         next: (res: any) => {
