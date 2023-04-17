@@ -1,0 +1,20 @@
+<div class="toasts-container z-3 m-3" *ngIf="toasts$ | async as toasts">
+  <div
+    *ngFor="let toast of toasts"
+    class="toast align-items-center border-0 show mt-1"
+    [class]="toast.toastClass"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body">{{ toast.message }}</div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        aria-label="Close"
+        (click)="onRemoveToast$.next(toast.id)"
+      ></button>
+    </div>
+  </div>
+</div>

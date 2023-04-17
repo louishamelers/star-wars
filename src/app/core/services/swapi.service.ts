@@ -7,12 +7,16 @@ import { updateRequestStatus } from '@ngneat/elf-requests';
 import { upsertEntities } from '@ngneat/elf-entities';
 import { setPage, updatePaginationData } from '@ngneat/elf-pagination';
 import { MODELS, UTIL } from 'src/app/shared';
+import { ToastsService } from './toasts.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SwapiService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private toastsService: ToastsService
+  ) {}
 
   getPlanets(page: number = 1, query: string = ''): void {
     PlanetsState.planetsStore.update(
@@ -48,6 +52,10 @@ export class SwapiService {
           PlanetsState.planetsStore.update(
             updateRequestStatus('getPlanets', 'error', err)
           );
+          this.toastsService.addToast(
+            'Could not fetch data, try again.',
+            'error'
+          );
         },
         complete: () => {
           PlanetsState.planetsStore.update(
@@ -80,6 +88,10 @@ export class SwapiService {
         error: (err) => {
           PlanetsState.planetsStore.update(
             updateRequestStatus('getPerson', 'error', err)
+          );
+          this.toastsService.addToast(
+            'Could not fetch data, try again.',
+            'error'
           );
         },
         complete: () => {
@@ -126,6 +138,10 @@ export class SwapiService {
           PeopleState.peopleStore.update(
             updateRequestStatus('getPeople', 'error', err)
           );
+          this.toastsService.addToast(
+            'Could not fetch data, try again.',
+            'error'
+          );
         },
         complete: () => {
           PeopleState.peopleStore.update(
@@ -161,6 +177,10 @@ export class SwapiService {
           PeopleState.peopleStore.update(
             updateRequestStatus('getPerson', 'error', err)
           );
+          this.toastsService.addToast(
+            'Could not fetch data, try again.',
+            'error'
+          );
         },
         complete: () => {
           PeopleState.peopleStore.update(
@@ -189,6 +209,10 @@ export class SwapiService {
         error: (err) => {
           FilmsState.filmsStore.update(
             updateRequestStatus('getFilm', 'error', err)
+          );
+          this.toastsService.addToast(
+            'Could not fetch data, try again.',
+            'error'
           );
         },
         complete: () => {

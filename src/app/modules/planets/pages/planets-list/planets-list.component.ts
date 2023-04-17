@@ -43,10 +43,7 @@ export class PlanetsListComponent implements OnInit {
 
   private handlePagination(): void {
     combineLatest([
-      this.queryFormControl.valueChanges.pipe(
-        debounceTime(200),
-        startWith(this.queryFormControl.value)
-      ),
+      this.queryFormControl.valueChanges.pipe(debounceTime(200), startWith('')),
       this.page$.pipe(startWith(1)),
     ])
       .pipe(
