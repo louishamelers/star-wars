@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { getPaginationData } from '@ngneat/elf-pagination';
+import { selectRequestStatus } from '@ngneat/elf-requests';
 import {
+  Observable,
   Subject,
   combineLatest,
   debounceTime,
@@ -24,6 +26,12 @@ export class PlanetsListComponent implements OnInit {
   paginationData$ = PlanetsState.paginationData$;
   page$ = new Subject<number>();
 
+  showNoResults$?: Observable<boolean>;
+  pending$ = PlanetsState.planetsStore.pipe(
+    selectRequestStatus('getPlanets'),
+    map((state) => state.value === 'pending')
+  );
+
   queryFormControl = new FormControl();
 
   constructor(private swapiService: SwapiService) {}
@@ -34,11 +42,23 @@ export class PlanetsListComponent implements OnInit {
     ).currentPage;
     this.swapiService.getPlanets(currentPage);
     this.handlePagination();
+    this.initShowNoResults();
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private initShowNoResults(): void {
+    this.showNoResults$ = combineLatest([
+      PlanetsState.planetsStore.pipe(selectRequestStatus('getPlanets')),
+      PlanetsState.currentPage$,
+    ]).pipe(
+      map(([state, results]) => {
+        return true;
+      })
+    );
   }
 
   private handlePagination(): void {
